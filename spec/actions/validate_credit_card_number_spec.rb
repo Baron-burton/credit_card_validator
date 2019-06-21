@@ -13,7 +13,7 @@ RSpec.describe ValidateCreditCardNumber do
     end
 
     context 'Visa' do
-      context 'valid credit card numnber' do
+      context 'valid credit card number' do
         let(:card_number) { '4111111111111111' }
 
         it 'validates the card number matches the Visa pattern' do
@@ -23,11 +23,25 @@ RSpec.describe ValidateCreditCardNumber do
     end
 
     context 'Discover' do
-      context 'valid credit card numnber' do
+      context 'valid credit card number' do
         let(:card_number) { '6011000000000004' }
 
         it 'validates the card number matches the Discover pattern' do
           expect(described_class.run(card_number)).to be_truthy
+        end
+      end
+    end
+
+    context 'Amex' do
+      context 'valid credit card number' do
+        let(:card_numbers) { %w[377381848857701 346949913087574] }
+
+        it 'validates the card number matches the Discover pattern' do
+          aggregate_failures do
+            card_numbers.each do |card_number|
+              expect(described_class.run(card_number)).to be_truthy
+            end
+          end
         end
       end
     end
