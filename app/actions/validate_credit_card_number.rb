@@ -1,7 +1,8 @@
 class ValidateCreditCardNumber
   class << self
     def run(card_number)
-      matches_card_company_pattern?(card_number)
+      matches_card_company_pattern?(card_number) &&
+        passes_luhn_algorithm?(card_number)
     end
 
     private
@@ -18,6 +19,17 @@ class ValidateCreditCardNumber
       else
         raise 'Not a valid card number'
       end
+    end
+
+    def passes_luhn_algorithm?(card_number)
+      number = card_number.chars.reverse.map(&:to_i)
+
+      sum = number.each_slice(2).map do |x, y|
+        y = 0 if y.nil?
+        [x, (y * 2).divmod(10)]
+      end.flatten.inject(&:+)
+
+      (sum % 10).zero?
     end
   end
 end
