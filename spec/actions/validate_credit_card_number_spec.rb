@@ -4,10 +4,22 @@ RSpec.describe ValidateCreditCardNumber do
   describe '.run' do
     context 'MasterCard' do
       context 'valid credit card number' do
-        let(:card_number) { '5500000000000004' }
+        let(:card_numbers) do
+          %w[
+            5500000000000004
+            5374610189499117
+            5485102976195757
+            5128513451419889
+            5273519825814617
+          ]
+        end
 
         it 'validates the card number matches the Mastercard pattern' do
-          expect(described_class.run(card_number)).to be_truthy
+          aggregate_failures do
+            card_numbers.each do |card_number|
+              expect(described_class.run(card_number)).to be_truthy
+            end
+          end
         end
       end
     end
