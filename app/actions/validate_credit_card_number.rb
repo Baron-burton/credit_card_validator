@@ -13,6 +13,8 @@ class ValidateCreditCardNumber
         Mastercard.card_length == card_number.length
       elsif card_number.start_with?(Visa.initial_digits)
         Visa.card_length.include?(card_number.length)
+      elsif card_number.start_with?(Discover.initial_digits)
+        Discover.card_length == card_number.length
       else
         raise 'Not a valid card number'
       end

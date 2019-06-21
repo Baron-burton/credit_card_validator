@@ -10,15 +10,6 @@ RSpec.describe ValidateCreditCardNumber do
           expect(described_class.run(card_number)).to be_truthy
         end
       end
-
-      context 'invalid credit card number' do
-        let(:card_number) { '1500000000000004' }
-
-        it 'returns an error' do
-          expect { described_class.run(card_number) }
-            .to raise_error('Not a valid card number')
-        end
-      end
     end
 
     context 'Visa' do
@@ -29,14 +20,24 @@ RSpec.describe ValidateCreditCardNumber do
           expect(described_class.run(card_number)).to be_truthy
         end
       end
+    end
 
-      context 'invalid credit card number' do
-        let(:card_number) { '1500000000000004' }
+    context 'Discover' do
+      context 'valid credit card numnber' do
+        let(:card_number) { '6011000000000004' }
 
-        it 'returns an error' do
-          expect { described_class.run(card_number) }
-            .to raise_error('Not a valid card number')
+        it 'validates the card number matches the Discover pattern' do
+          expect(described_class.run(card_number)).to be_truthy
         end
+      end
+    end
+
+    context 'invalid credit card number' do
+      let(:card_number) { '1500000000000004' }
+
+      it 'returns an error' do
+        expect { described_class.run(card_number) }
+          .to raise_error('Not a valid card number')
       end
     end
   end
