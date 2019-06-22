@@ -1,24 +1,21 @@
 class ValidateCreditCardNumber
   class << self
+    CARD_COMPANIES = [Mastercard, Visa, Amex, Discover].freeze
+
     def run(card_number)
-      matches_card_company_pattern?(card_number) &&
-        passes_luhn_algorithm?(card_number)
+      card_company = matching_card_company(card_number)
+
+      [passes_luhn_algorithm?(card_number), card_company]
     end
 
     private
 
-    def matches_card_company_pattern?(card_number)
-      if Mastercard.initial_digits.include?(card_number[0..1])
-        Mastercard.card_length == card_number.length
-      elsif card_number.start_with?(Visa.initial_digits)
-        Visa.card_length.include?(card_number.length)
-      elsif card_number.start_with?(Discover.initial_digits)
-        Discover.card_length == card_number.length
-      elsif Amex.initial_digits.include?(card_number[0..1])
-        Amex.card_length == card_number.length
-      else
-        raise 'Not a valid card number'
+    def matching_card_company(card_number)
+      CARD_COMPANIES.each do |company|
+        return company.to_s if company.belongs_to_me?(card_number)
       end
+
+      raise 'Unknown card number'
     end
 
     def passes_luhn_algorithm?(card_number)
