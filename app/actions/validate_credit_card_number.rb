@@ -3,6 +3,8 @@ class ValidateCreditCardNumber
     CARD_COMPANIES = [Mastercard, Visa, Amex, Discover].freeze
 
     def run(card_number)
+      raise 'Try inputting a number instead' if card_number.to_i.zero?
+
       card_company = matching_card_company(card_number)
 
       [passes_luhn_algorithm?(card_number), card_company]
