@@ -2,11 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Find Card Company for Card Number' do
   let(:params) do
-    HashWithIndifferentAccess.new(
-      data: {
-        card_number: card_number
-      }
-    )
+    HashWithIndifferentAccess.new(card_number: card_number)
   end
 
   context 'when receiving a valid card number' do
@@ -15,9 +11,8 @@ RSpec.describe 'Find Card Company for Card Number' do
     it 'returns a 200 response with the name of the card company' do
       get '/api/v1/find_card_company', params: params
 
-      expect(response.content_type).to eq('application/json')
-      expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)).to eq('company' => 'Mastercard')
+      expect(response.body)
+        .to include('Number belongs to Mastercard')
     end
   end
 
@@ -27,10 +22,8 @@ RSpec.describe 'Find Card Company for Card Number' do
     it 'returns a 404 response with an error' do
       get '/api/v1/find_card_company', params: params
 
-      expect(response.content_type).to eq('application/json')
-      expect(response.status).to eq(404)
-      expect(JSON.parse(response.body))
-        .to eq('error' => 'Invalid card number for Mastercard')
+      expect(response.body)
+        .to include('Invalid card number for Mastercard')
     end
   end
 
@@ -40,10 +33,8 @@ RSpec.describe 'Find Card Company for Card Number' do
     it 'returns an error' do
       get '/api/v1/find_card_company', params: params
 
-      expect(response.content_type).to eq('application/json')
-      expect(response.status).to eq(422)
-      expect(JSON.parse(response.body))
-        .to eq('error' => 'Unknown card number')
+      expect(response.body)
+        .to include('Unknown card number')
     end
   end
 
@@ -53,10 +44,8 @@ RSpec.describe 'Find Card Company for Card Number' do
     it 'returns an error' do
       get '/api/v1/find_card_company', params: params
 
-      expect(response.content_type).to eq('application/json')
-      expect(response.status).to eq(422)
-      expect(JSON.parse(response.body))
-        .to eq('error' => 'Try inputting a number instead')
+      expect(response.body)
+        .to include('Try inputting a number instead')
     end
   end
 end
