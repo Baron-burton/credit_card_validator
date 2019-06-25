@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class FindCardCompanyController < ApplicationController
+  before_action :wipe_flash, only: :index
+
   def index
     @card_number = card_params[:card_number]
 
@@ -23,5 +25,9 @@ class FindCardCompanyController < ApplicationController
 
   def card_params
     params.permit(:card_number)
+  end
+
+  def wipe_flash
+    flash.clear
   end
 end
