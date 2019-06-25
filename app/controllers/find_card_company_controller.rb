@@ -11,7 +11,7 @@ class FindCardCompanyController < ApplicationController
     )
 
     if valid_number
-      flash[:notice] = "Number belongs to #{card_company}"
+      flash[:notice] = "Valid number for #{card_company}"
     else
       flash[:alert] = "Invalid card number for #{card_company}"
     end

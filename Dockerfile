@@ -13,4 +13,5 @@ RUN bundle install
 
 COPY . /app
 
+CMD rm -f tmp/pids/server.pid
 CMD rails server -b 0.0.0.0
