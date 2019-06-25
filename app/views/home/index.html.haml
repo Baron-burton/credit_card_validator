@@ -3,6 +3,6 @@
 - flash.each do |type, message|
   = content_tag :div, message, class: "flash #{type}"
 
-= form_tag('/api/v1/find_card_company', method: 'get', class: 'card_number_validator') do
+= form_tag('/find_card_company', method: 'get', class: 'card_number_validator') do
   = text_field_tag 'card_number', @card_number, placeholder: 'Enter a card number here...'
   = submit_tag 'Validate!'
