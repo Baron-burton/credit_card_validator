@@ -6,7 +6,7 @@ ruby '2.5.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'haml-rails', '2.0.1'
 gem 'jbuilder', '~> 2.5'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 gem 'rails', '~> 5.2.3'
 gem 'sass-rails', '~> 5.0'
 gem 'sqlite3'
